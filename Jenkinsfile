@@ -1,11 +1,20 @@
 
 def projects = [[name: "demo-store-auth", jdk: "jdk-11", maven: "maven-3.6.3"]]
-def changedProjects = getChangedProjects(projects)
+def changedProjects = []
 
 pipeline {
     agent any
 
     stages {
+        stage("Check project changes") {
+            steps {
+                script {
+                    changedProjects = getChangedProjects(projects)
+                }
+            }
+        }
+
+
         stage("Build") {
             steps {
                 echo 'Building projects ...'
