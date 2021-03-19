@@ -82,7 +82,7 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.1.2</version>
                 <configuration>
-                    <configLocation>google_check.xml</configLocation>
+                    <configLocation>google_checkstyle.xml</configLocation>
                     <failOnViolation>false</failOnViolation>
                 </configuration>
                 <dependencies>

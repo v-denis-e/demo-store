@@ -43,7 +43,7 @@ pipeline {
         }
         stage('Integration testing') {
             steps {
-                echo 'Executing unit tests ...'
+                echo 'Executing integration tests ...'
                 script {
                     changedProjects.each {
                         dir (it.name) {
