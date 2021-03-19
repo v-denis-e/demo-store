@@ -1,5 +1,6 @@
 package kz.vdenise.demostore.auth.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -18,6 +20,7 @@ import lombok.Setter;
  */
 @Entity
 @NoArgsConstructor
+@RequiredArgsConstructor(staticName = "of")
 @AllArgsConstructor
 @Getter
 @Setter
@@ -32,6 +35,6 @@ public class Role {
   private String description;
 
   @ManyToMany(mappedBy = "roles")
-  private Set<User> users;
+  private Set<User> users = new HashSet<>();
 
 }

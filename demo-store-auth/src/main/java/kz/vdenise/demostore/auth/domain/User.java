@@ -1,6 +1,7 @@
 package kz.vdenise.demostore.auth.domain;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -59,6 +60,12 @@ public class User {
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "role_id")
   )
-  private Set<Role> roles;
+  @Builder.Default
+  private Set<Role> roles = new HashSet<>();
+
+  public void addRole(Role role) {
+    role.getUsers().add(this);
+    this.roles.add(role);
+  }
 
 }
