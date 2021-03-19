@@ -18,7 +18,6 @@ pipeline {
                 echo 'Building projects ...'
                 script {
                     changedProjects.each {
-                        echo 'The project ${it.name} need to build.'
                         dir (it.name) {
                             withMaven(jdk: it.jdk, maven: it.maven) {
                                 sh 'mvn clean package -Dmaven.test.skip=true'
@@ -26,7 +25,6 @@ pipeline {
                         }
                     }
                 }
-                echo 'Building finished'
             }
         }
         stage('Unit testing') {
