@@ -13,8 +13,6 @@ pipeline {
                 }
             }
         }
-
-
         stage("Build") {
             steps {
                 echo 'Building projects ...'
@@ -30,6 +28,55 @@ pipeline {
                 }
                 echo 'Building finished'
             }
+        }
+        stage('Unit testing') {
+            steps {
+                echo 'Executing unit tests ...'
+                script {
+                    changedProjects.each {
+                        dir (it.name) {
+                            withMaven(jdk: it.jdk, maven: it.maven) {
+                                sh 'mvn test'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        stage('Integration testing') {
+            steps {
+                echo 'Executing unit tests ...'
+                script {
+                    changedProjects.each {
+                        dir (it.name) {
+                            withMaven(jdk: it.jdk, maven: it.maven) {
+                                sh 'mvn failsafe:integration-test'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        stage('Analyse') {
+            steps {
+                echo 'Verifying style ...'
+                script {
+                    changedProjects.each {
+                        dir (it.name) {
+                            withMaven(jdk: it.jdk, maven: it.maven) {
+                                withSonarQubeEnv() {
+                                    sh 'mvn checkstyle:check sonar:sonar'
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    post {
+        always {
+            recordIssues enabledForFailure: true, tool: checkStyle()
         }
     }
 }
