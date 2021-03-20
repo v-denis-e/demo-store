@@ -33,8 +33,7 @@ class UserRepositoryIT {
 
     var actual = repository.findByLogin(expected.getLogin());
 
-    assertThat(actual).isPresent();
-    assertThat(actual).contains(expected);
+    assertThat(actual).isPresent().contains(expected);
   }
 
   @Test
