@@ -62,8 +62,9 @@ pipeline {
                     changedProjects.each {
                         dir (it.name) {
                             withMaven(jdk: it.jdk, maven: it.maven) {
+                                sh 'mvn checkstyle:check'
                                 withSonarQubeEnv() {
-                                    sh 'mvn checkstyle:check sonar:sonar'
+                                    sh 'mvn sonar:sonar -Dsonar.coverage.jacoco.xmlReportPaths=./target/site/jacoco/jacoco.xml'
                                 }
                             }
                         }
