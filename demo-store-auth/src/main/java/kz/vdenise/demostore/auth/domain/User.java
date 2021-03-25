@@ -1,5 +1,6 @@
 package kz.vdenise.demostore.auth.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,7 +30,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Builder
-public class User {
+public class User implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
